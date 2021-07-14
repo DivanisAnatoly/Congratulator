@@ -1,0 +1,66 @@
+﻿@model Congratulator.Interface.ViewModels.HomePageViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h1>Index</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Surname
+            </th>
+            <th>
+                BirthDay
+            </th>
+            <th>
+                Avatar
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.BirthdayPeople)
+        {
+            <tr>
+                @Html.Partial("BirthdayListItem", item)
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h2>Will soon celebrate</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Surname
+            </th>
+            <th>
+                BirthDay
+            </th>
+            <th>
+                Avatar
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.BirthdayPeopleSoon)
+        {
+            <tr>
+                @Html.Partial("BirthdayListItem", item)
+            </tr>
+        }
+    </tbody>
+
+</table>

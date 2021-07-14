@@ -1,0 +1,17 @@
+﻿@model Congratulator.Domain.Entities.Person
+
+<td>
+    @Html.DisplayFor(modelItem => Model.Name)
+</td>
+<td>
+    @Html.DisplayFor(modelItem => Model.Surname)
+</td>
+<td>
+    @Html.DisplayFor(modelItem => Model.BirthDay)
+</td>
+<td>
+    @if (Model.Avatar == null)
+    {<img src="@("~/img/app/DefaultUser.jpg")" asp-append-version="true" alt="Фотография" width="32" height="32" class="rounded-circle" />}
+    else
+    {<img src="@("~/img/" + Model.Avatar)" asp-append-version="true" alt="Фотография" width="32" height="32" class="rounded-circle" />}
+</td>
