@@ -3,40 +3,40 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1 class="text-center m-3">All birthdays list</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Surname)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BirthDay)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Avatar)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
+<div class="row justify-content-between mb-5 mx-2">
+
+    <p>
+        <a asp-controller="BirthdayList" asp-action="Create" class="btn btn btn-success shadow-sm">Add new <i class="bi bi-person-plus-fill"></i></a>
+    </p>
+
+    <form class="form-inline" asp-controller="BirthdayList" asp-action="Index" method="get">
+        <div class="input-group mb-4 shadow-sm">
+            <input type="search" placeholder="Search... " aria-describedby="button-addon5" class="form-control" name="SearchString">
+            <div class="input-group-append">
+                <button id="button-addon5" type="submit" class="btn btn-primary"><i class="bi bi-search"></i></button>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+
+
+<div class="row justify-content-center">
+    @foreach (var item in Model)
+    {
+        <div class="card p-2 m-2 shadow-sm" style="width: 18rem;">
+            <div class="card-body">
                 @Html.Partial("BirthdayListItem", item)
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+            </div>
+            <div class="btn-group">
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-dark"><i class="bi bi-pencil-fill"></i></a>
+                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-info"><i class="bi bi-info-lg"></i></a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger"><i class="bi bi-person-x-fill"></i></a>
+            </div>
+        </div>
+    }
+</div>

@@ -3,8 +3,7 @@ using Congratulator.Infrastructure.RepositoryPattern;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Congratulator.Services
 {
@@ -24,7 +23,7 @@ namespace Congratulator.Services
 
         public IEnumerable<Person> GetPeople()
         {
-            return _repository.GetAllRecords();
+            return _repository.GetAllRecords().OrderBy(p=> DaysToBirthday(p.BirthDay));
         }
 
         public Person GetPerson(int? id)

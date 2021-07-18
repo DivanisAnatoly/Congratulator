@@ -1,17 +1,11 @@
 ﻿using Congratulator.Domain.Entities;
-using Congratulator.Infrastructure.DBAccess;
 using Congratulator.Interface.ViewModels;
 using Congratulator.Services;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Congratulator.Interface.Controllers
 {
@@ -28,14 +22,29 @@ namespace Congratulator.Interface.Controllers
 
 
         // GET: BirthdayListController
-        public async Task<IActionResult> Index()
+        public IActionResult Index(string searchString)
         {
-            return View(_recordService.GetPeople());
+            var people = _recordService.GetPeople();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                people = people.Where(p => Founded(p, searchString));
+            }
+            
+            return View(people);
         }
+
+        private bool Founded(Person person, string searchString)
+        {
+            string fullName = person.Name + person.Surname;
+            fullName = fullName.Trim().ToLower();
+            searchString = searchString.Trim().ToLower();
+            return fullName.Contains(searchString);
+        } 
 
 
         // GET: BirthdayListController/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null)
                 return NotFound();
@@ -68,7 +77,7 @@ namespace Congratulator.Interface.Controllers
         // POST: BirthdayListController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(PersonViewModel model)
+        public IActionResult Create(PersonViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -92,7 +101,7 @@ namespace Congratulator.Interface.Controllers
 
 
         // GET: BirthdayListController/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
@@ -121,7 +130,7 @@ namespace Congratulator.Interface.Controllers
         // POST: BirthdayListController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, PersonViewModel model)
+        public IActionResult Edit(int id, PersonViewModel model)
         {
             if (id != model.Id)
             {
@@ -154,7 +163,7 @@ namespace Congratulator.Interface.Controllers
 
 
         // GET: BirthdayListController/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -184,7 +193,7 @@ namespace Congratulator.Interface.Controllers
         // POST: BirthdayListController/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
             var person = _recordService.GetPerson(id);
 
@@ -208,7 +217,6 @@ namespace Congratulator.Interface.Controllers
 
             if (model.ImageFile != null)
             {
-
                 string extension = Path.GetExtension(model.ImageFile.FileName);
 
                 fileName = model.Name + model.Surname + DateTime.Now.ToString("yyMMddHHmmssff") + extension;

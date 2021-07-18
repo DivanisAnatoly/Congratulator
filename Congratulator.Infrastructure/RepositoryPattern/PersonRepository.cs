@@ -1,10 +1,8 @@
 ﻿using Congratulator.Domain.Entities;
 using Congratulator.Infrastructure.DBAccess;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Congratulator.Infrastructure.RepositoryPattern
 {

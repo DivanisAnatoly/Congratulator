@@ -3,15 +3,11 @@ using Congratulator.Infrastructure.RepositoryPattern;
 using Congratulator.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace Congratulator.Interface
 {
@@ -24,7 +20,7 @@ namespace Congratulator.Interface
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
@@ -32,13 +28,12 @@ namespace Congratulator.Interface
             services.AddDbContext<CongratulatorContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("CongratulatorContext")));
 
-
             services.AddTransient<IPersonRepository, PersonRepository>();
             services.AddTransient<IPersonRecordService, PersonRecordService>();
 
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -48,7 +43,6 @@ namespace Congratulator.Interface
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
@@ -65,5 +59,6 @@ namespace Congratulator.Interface
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+    
     }
 }

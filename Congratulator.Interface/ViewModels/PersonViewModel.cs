@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace Congratulator.Interface.ViewModels
 {
@@ -11,12 +9,15 @@ namespace Congratulator.Interface.ViewModels
     {
         public int Id { get; set; }
 
+        [Required]
         [MaxLength(50)]
         public string Name { get; set; }
-
+        
+        [Required]
         [MaxLength(50)]
         public string Surname { get; set; }
 
+        [Required]
         [DataType(DataType.Date)]
         public DateTime BirthDay { get; set; }
 
@@ -24,5 +25,6 @@ namespace Congratulator.Interface.ViewModels
         public string ExsistingAvatar { get; set; }
 
         public IFormFile ImageFile { get; set; }
+
     }
 }

@@ -4,63 +4,47 @@
     ViewData["Title"] = "Home Page";
 }
 
-<h1>Index</h1>
 
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                Surname
-            </th>
-            <th>
-                BirthDay
-            </th>
-            <th>
-                Avatar
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+<h2>Today's birthday</h2>
+<div class="row justify-content-center">
+    @if (Model.BirthdayPeople.Count() == 0)
+    {
+        <div class="m-3">
+            <p>You have no one to congratulate today</p>
+        </div>
+    }
+    else
+    {
         @foreach (var item in Model.BirthdayPeople)
         {
-            <tr>
-                @Html.Partial("BirthdayListItem", item)
-            </tr>
+            <div class="card p-2 m-2 shadow-sm" style="width: 18rem;">
+                <div class="card-body">
+                    @Html.Partial("BirthdayListItem", item)
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    }
+</div>
 
-<h2>Will soon celebrate</h2>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                Surname
-            </th>
-            <th>
-                BirthDay
-            </th>
-            <th>
-                Avatar
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
+
+<h2>Upcoming birthdays</h2>
+<div class="row justify-content-center">
+
+    @if (Model.BirthdayPeopleSoon.Count() == 0)
+    {
+        <div class="m-3">
+            <p>There are no birthdays in the near future</p>
+        </div>
+    }
+    else
+    {
         @foreach (var item in Model.BirthdayPeopleSoon)
         {
-            <tr>
-                @Html.Partial("BirthdayListItem", item)
-            </tr>
+            <div class="card p-2 m-2 shadow-sm" style="width: 18rem;">
+                <div class="card-body">
+                    @Html.Partial("BirthdayListItem", item)
+                </div>
+            </div>
         }
-    </tbody>
-
-</table>
+    }
+</div>

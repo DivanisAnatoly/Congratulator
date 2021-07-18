@@ -1,9 +1,5 @@
 ﻿using Congratulator.Domain.Entities;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Congratulator.Services
 {
@@ -22,7 +18,6 @@ namespace Congratulator.Services
         IEnumerable<Person> GetBirthdayPeople();
 
         IEnumerable<Person> GetSoonBirthdayPeople(int daysInterval=30);
-
 
     }
 }

@@ -1,17 +1,48 @@
 ﻿@model Congratulator.Domain.Entities.Person
 
-<td>
-    @Html.DisplayFor(modelItem => Model.Name)
-</td>
-<td>
-    @Html.DisplayFor(modelItem => Model.Surname)
-</td>
-<td>
-    @Html.DisplayFor(modelItem => Model.BirthDay)
-</td>
-<td>
-    @if (Model.Avatar == null)
-    {<img src="@("~/img/app/DefaultUser.jpg")" asp-append-version="true" alt="Фотография" width="32" height="32" class="rounded-circle" />}
-    else
-    {<img src="@("~/img/" + Model.Avatar)" asp-append-version="true" alt="Фотография" width="32" height="32" class="rounded-circle" />}
-</td>
+
+<div class="row">
+    <div class="col-3 p-0">
+        @if (Model.Avatar == null)
+        {<img src="@("~/img/app/DefaultUser.jpg")" asp-append-version="true" alt="Фотография" width="64" height="64" class="rounded-circle" />}
+        else
+        {<img src="@("~/img/" + Model.Avatar)" asp-append-version="true" alt="Фотография" width="64" height="64" class="rounded-circle" />}
+    </div>
+    <div class="col-9 pe-0">
+        <h5 class="card-title">@Model.Name @Model.Surname</h5>
+        @{
+            int daysTo = DaysToBirthday(Model.BirthDay);
+            if (daysTo == 0)
+            {
+                <h6 class="card-subtitle mb-2 text-danger">Age: @Age(Model.BirthDay)</h6>
+                <h6 class="card-subtitle mb-2 text-danger">It's time!!!</h6>
+            }
+            else
+            {
+                <h6 class="card-subtitle mb-2 text-muted">Age: @Age(Model.BirthDay)</h6>
+                <h6 class="card-subtitle mb-2 text-muted">Days to birthday: @daysTo</h6>
+            }
+        }
+    </div>
+</div>
+
+@{ 
+    int Age(DateTime birthtay)
+    {
+        DateTime now = DateTime.Today;
+        int age = now.Year - birthtay.Year;
+        if (birthtay > now.AddYears(-age)) age--;
+        return age;
+    }
+
+    int DaysToBirthday(DateTime bornDate)
+    {
+        DateTime today = DateTime.Today;
+        DateTime date = new DateTime(today.Year, bornDate.Month, bornDate.Day);
+
+        if (date.DayOfYear < today.DayOfYear)
+            date = new DateTime(date.Year + 1, date.Month, date.Day);
+
+        return (date.Date - today.Date).Days;
+    }
+}
