@@ -16,20 +16,21 @@ namespace Congratulator.Services
             _repository = repository;
         }
 
+        //добавить новую запись о человеке
         public void AddPerson(Person newPerson)
         {
             _repository.AddRecord(newPerson);
         }
 
+        //Получить записи о людях
         public IEnumerable<Person> GetPeople()
         {
-            return _repository.GetAllRecords().OrderBy(p=> DaysToBirthday(p.BirthDay));
+            return _repository.GetAllRecords();
         }
 
-        public Person GetPerson(int? id)
+        //Получить запись по ID 
+        public Person GetPerson(int id)
         {
-            if (id == null) return null;
-
             var person = _repository.GetRecord(id);
 
             if (person == null) return null;
@@ -37,38 +38,28 @@ namespace Congratulator.Services
             return person;
         }
 
+        //Удалить запись из БД
         public void RemovePerson(Person delPerson)
         {
             _repository.RemoveRecord(delPerson);
         }
 
+        //Обновить запись в БД
         public void UpdatePerson(Person updPerson)
         {
             _repository.UpdateRecord(updPerson);
         }
 
+        //Получение записей об именинниках
         public IEnumerable<Person> GetBirthdayPeople()
         {
-            var people = _repository.GetAllRecords();
-            return people.Where(p => DaysToBirthday(p.BirthDay) == 0);
+            return _repository.GetBirthdayPeople();
         }
 
-        public IEnumerable<Person> GetSoonBirthdayPeople(int daysInterval = 30)
+        //Получение записей об ближайших именинниках
+        public IEnumerable<Person> GetSoonBirthdayPeople()
         {
-            var people = _repository.GetAllRecords();
-            return people.Where(p => DaysToBirthday(p.BirthDay) > 0 && DaysToBirthday(p.BirthDay) < daysInterval).OrderBy(p=>p.BirthDay);
-        }
-
-
-        private static int DaysToBirthday(DateTime bornDate)
-        {
-            DateTime today = DateTime.Today;
-            DateTime date = new DateTime(today.Year, bornDate.Month, bornDate.Day);
-
-            if (date.DayOfYear < today.DayOfYear)
-                date = new DateTime(date.Year + 1, date.Month, date.Day);
-
-            return (date.Date - today.Date).Days;
+            return _repository.GetSoonBirthdayPeople();
         }
 
 

@@ -44,11 +44,8 @@ namespace Congratulator.Interface.Controllers
 
 
         // GET: BirthdayListController/Details/5
-        public IActionResult Details(int? id)
+        public IActionResult Details(int id)
         {
-            if (id == null)
-                return NotFound();
-
             var person = _recordService.GetPerson(id);
 
             if (person == null)
@@ -101,13 +98,8 @@ namespace Congratulator.Interface.Controllers
 
 
         // GET: BirthdayListController/Edit/5
-        public IActionResult Edit(int? id)
+        public IActionResult Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var person = _recordService.GetPerson(id);
             if (person == null)
             {
@@ -163,13 +155,8 @@ namespace Congratulator.Interface.Controllers
 
 
         // GET: BirthdayListController/Delete/5
-        public IActionResult Delete(int? id)
+        public IActionResult Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
             var person = _recordService.GetPerson(id);
 
             if (person == null)
@@ -209,7 +196,7 @@ namespace Congratulator.Interface.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
+        //сохранение фото человека
         private string ProcessUploadedFile(PersonViewModel model)
         {
             string wwwRootPath = _hostEnvirement.WebRootPath;

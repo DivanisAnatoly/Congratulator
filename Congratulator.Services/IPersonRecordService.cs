@@ -7,7 +7,7 @@ namespace Congratulator.Services
     {
         IEnumerable<Person> GetPeople();
 
-        Person GetPerson(int? id);
+        Person GetPerson(int id);
 
         void AddPerson(Person newPerson);
 
@@ -17,7 +17,7 @@ namespace Congratulator.Services
 
         IEnumerable<Person> GetBirthdayPeople();
 
-        IEnumerable<Person> GetSoonBirthdayPeople(int daysInterval=30);
+        IEnumerable<Person> GetSoonBirthdayPeople();
 
     }
 }

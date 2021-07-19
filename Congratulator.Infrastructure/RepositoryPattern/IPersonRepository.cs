@@ -8,13 +8,17 @@ namespace Congratulator.Infrastructure.RepositoryPattern
     {
         IEnumerable<Person> GetAllRecords();
 
-        Person GetRecord(int? id);
+        Person GetRecord(int id);
 
         void AddRecord(Person newPerson);
 
         void UpdateRecord(Person updPerson);
 
         public void RemoveRecord(Person person);
+
+        public IEnumerable<Person> GetBirthdayPeople();
+
+        public IEnumerable<Person> GetSoonBirthdayPeople();
 
     }
 }
